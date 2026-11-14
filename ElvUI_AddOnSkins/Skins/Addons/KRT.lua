@@ -87,8 +87,7 @@ local function ApplySkin()
 		S:HandleButton(KRTSpammerClearBtn)
 		S:HandleButton(KRTSpammerStartBtn)
 		for _, ebName in ipairs({
-			"Name", "Duration", "Tank", "TankClass", "Healer", "HealerClass",
-			"Melee", "MeleeClass", "Ranged", "RangedClass", "MinGS", "Message",
+			"Name", "Duration", "Tank", "Healer", "Melee", "Ranged", "MinGS", "Message",
 		}) do
 			local eb = _G["KRTSpammer"..ebName]
 			if eb then S:HandleEditBox(eb) end
@@ -131,15 +130,21 @@ local function ApplySkin()
 				cb:SetHitRectInsets(0, -35, 0, 0)
 			end
 		end
+		-- Class/spec checkboxes (KRTSpammerClassCB1..N, 16px, created by KRT.Spammer:OnLoad):
+		local i = 1
+		while _G["KRTSpammerClassCB"..i] do
+			SkinRadioCheckBox(_G["KRTSpammerClassCB"..i])
+			i = i + 1
+		end
 		if KRTSpammerShowSlots then
 			S:HandleCheckBox(KRTSpammerShowSlots)
 			KRTSpammerShowSlots:ClearAllPoints()
-			KRTSpammerShowSlots:SetPoint("TOPLEFT", KRTSpammer, "TOPLEFT", 15, -345)
+			KRTSpammerShowSlots:SetPoint("TOPLEFT", KRTSpammer, "TOPLEFT", 15, -481)
 		end
 		if KRTSpammerGsAchNeeded then
 			S:HandleCheckBox(KRTSpammerGsAchNeeded)
 			KRTSpammerGsAchNeeded:ClearAllPoints()
-			KRTSpammerGsAchNeeded:SetPoint("TOPLEFT", KRTSpammer, "TOPLEFT", 15, -369)
+			KRTSpammerGsAchNeeded:SetPoint("TOPLEFT", KRTSpammer, "TOPLEFT", 15, -505)
 		end
 	end
 

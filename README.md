@@ -17,6 +17,8 @@ Original by [Kader Bouyakoub](https://github.com/bkader) | Fork & new features b
 - Slot counter now supports **5-man dungeons**
 - Raid name field accepts up to **30 characters** (was 15)
 - Preview shows **error message** in red when needed roles exceed raid size
+- Class inputs replaced by **class/spec checkboxes** per role (e.g. Tank: PPala, PWarrior, BDK, Bear) — the message updates as you tick them: `2 Tank (PPala/BDK)`
+- **Right-click** a checkbox to rename it (e.g. into your language); leave it empty to restore the English default
 
 ### Highest Roll / Count Mode
 New toggle in the Master Loot window:

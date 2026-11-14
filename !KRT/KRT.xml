@@ -292,7 +292,7 @@
 	</CheckButton>
 	<!-- The Frame: LFM Spam -->
 	<Frame name="KRTSpammer" inherits="KRTFrameTemplate">
-		<Size><AbsDimension x="260" y="452" /></Size>
+		<Size><AbsDimension x="260" y="588" /></Size>
 		<Layers>
 			<Layer level="ARTWORK">
 				<FontString name="$parentNameStr" text="RAID" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="BOTTOM">
@@ -341,18 +341,7 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentClassStr" text="CLASS" inherits="KRTFontStringGray" justifyH="LEFT" justifyV="BOTTOM">
-					<Size><AbsDimension x="105" y="10" /></Size>
-					<Anchors>
-						<Anchor point="TOPLEFT">
-							<Offset><AbsDimension x="130" y="-105" /></Offset>
-						</Anchor>
-						<Anchor point="TOPRIGHT">
-							<Offset><AbsDimension x="0" y="-105" /></Offset>
-						</Anchor>
-					</Anchors>
-				</FontString>
-				<FontString name="$parentTanksStr" text="TANK" inherits="GameFontNormalSmall" justifyH="RIGHT" justifyV="BOTTOM">
+				<FontString name="$parentTanksStr" text="TANK" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="BOTTOM">
 					<Size><AbsDimension x="55" y="18" /></Size>
 					<Anchors>
 						<Anchor point="TOPLEFT">
@@ -360,27 +349,27 @@
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentHealersStr" text="HEALER" inherits="GameFontNormalSmall" justifyH="RIGHT" justifyV="BOTTOM">
+				<FontString name="$parentHealersStr" text="HEALER" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="BOTTOM">
 					<Size><AbsDimension x="55" y="18" /></Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentTanksStr" relativePoint="BOTTOMLEFT">
-							<Offset><AbsDimension x="0" y="-10" /></Offset>
+							<Offset><AbsDimension x="0" y="-44" /></Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentMeleesStr" text="MELEE" inherits="GameFontNormalSmall" justifyH="RIGHT" justifyV="BOTTOM">
+				<FontString name="$parentMeleesStr" text="MELEE" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="BOTTOM">
 					<Size><AbsDimension x="55" y="18" /></Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentHealersStr" relativePoint="BOTTOMLEFT">
-							<Offset><AbsDimension x="0" y="-10" /></Offset>
+							<Offset><AbsDimension x="0" y="-44" /></Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
-				<FontString name="$parentRangedStr" text="RANGED" inherits="GameFontNormalSmall" justifyH="RIGHT" justifyV="BOTTOM">
+				<FontString name="$parentRangedStr" text="RANGED" inherits="GameFontNormalSmall" justifyH="LEFT" justifyV="BOTTOM">
 					<Size><AbsDimension x="55" y="18" /></Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentMeleesStr" relativePoint="BOTTOMLEFT">
-							<Offset><AbsDimension x="0" y="-10" /></Offset>
+							<Offset><AbsDimension x="0" y="-44" /></Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
@@ -388,7 +377,7 @@
 					<Size><AbsDimension x="55" y="18" /></Size>
 					<Anchors>
 						<Anchor point="TOPLEFT" relativeTo="$parentRangedStr" relativePoint="BOTTOMLEFT">
-							<Offset><AbsDimension x="0" y="-10" /></Offset>
+							<Offset><AbsDimension x="0" y="-44" /></Offset>
 						</Anchor>
 					</Anchors>
 				</FontString>
@@ -492,10 +481,10 @@
 				<Size><AbsDimension x="55" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" >
-						<Offset><AbsDimension x="20" y="-364" /></Offset>
+						<Offset><AbsDimension x="20" y="-500" /></Offset>
 					</Anchor>
 					<Anchor point="TOPRIGHT" >
-						<Offset><AbsDimension x="-15" y="-364" /></Offset>
+						<Offset><AbsDimension x="-15" y="-500" /></Offset>
 					</Anchor>
 				</Anchors>
 			</FontString>
@@ -503,7 +492,7 @@
 				<Size><AbsDimension x="218" y="0" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset><AbsDimension x="20" y="-384" /></Offset>
+						<Offset><AbsDimension x="20" y="-520" /></Offset>
 					</Anchor>
 					<Anchor point="BOTTOMRIGHT">
 						<Offset><AbsDimension x="-15" y="15" /></Offset>
@@ -514,7 +503,7 @@
 				<Size><AbsDimension x="55" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPRIGHT" >
-						<Offset><AbsDimension x="-15" y="-364" /></Offset>
+						<Offset><AbsDimension x="-15" y="-500" /></Offset>
 					</Anchor>
 				</Anchors>
 			</FontString>
@@ -560,100 +549,57 @@
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentTank" inherits="KRTSpammerEditBox" letters="1" numeric="true">
-				<Size><AbsDimension x="25" y="13" /></Size>
+				<Size><AbsDimension x="30" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT">
-						<Offset><AbsDimension x="90" y="-125" /></Offset>
+						<Offset><AbsDimension x="90" y="-122" /></Offset>
 					</Anchor>
 				</Anchors>
-				<FontString justifyH="CENTER" />
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("TankClass", "Duration")</OnTabPressed>
-				</Scripts>
-			</EditBox>
-			<EditBox name="$parentTankClass" inherits="KRTSpammerEditBox">
-				<Size><AbsDimension x="100" y="13" /></Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentTank" relativePoint="TOPRIGHT">
-						<Offset><AbsDimension x="20" y="0" /></Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("Healer", "Tank")</OnTabPressed>
+				<FontString inherits="GameFontHighlight" justifyH="CENTER" />
+				<Scripts><OnTabPressed>KRT.Spammer:Tab("Healer", "Duration")</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentHealer" inherits="KRTSpammerEditBox" letters="1" numeric="true">
-				<Size><AbsDimension x="25" y="13" /></Size>
+				<Size><AbsDimension x="30" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parentTank" relativePoint="BOTTOMLEFT">
-						<Offset><AbsDimension x="0" y="-15" /></Offset>
+						<Offset><AbsDimension x="0" y="-44" /></Offset>
 					</Anchor>
 				</Anchors>
-				<FontString justifyH="CENTER" />
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("HealerClass", "TankClass")</OnTabPressed>
-				</Scripts>
-			</EditBox>
-			<EditBox name="$parentHealerClass" inherits="KRTSpammerEditBox">
-				<Size><AbsDimension x="100" y="13" /></Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentHealer" relativePoint="TOPRIGHT">
-						<Offset><AbsDimension x="20" y="0" /></Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("Melee", "Healer")</OnTabPressed>
+				<FontString inherits="GameFontHighlight" justifyH="CENTER" />
+				<Scripts><OnTabPressed>KRT.Spammer:Tab("Melee", "Tank")</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentMelee" inherits="KRTSpammerEditBox" letters="2" numeric="true">
-				<Size><AbsDimension x="25" y="13" /></Size>
+				<Size><AbsDimension x="30" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parentHealer" relativePoint="BOTTOMLEFT">
-						<Offset><AbsDimension x="0" y="-15" /></Offset>
+						<Offset><AbsDimension x="0" y="-44" /></Offset>
 					</Anchor>
 				</Anchors>
-				<FontString justifyH="CENTER" />
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("MeleeClass", "HealerClass")</OnTabPressed>
-				</Scripts>
-			</EditBox>
-			<EditBox name="$parentMeleeClass" inherits="KRTSpammerEditBox">
-				<Size><AbsDimension x="100" y="13" /></Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentMelee" relativePoint="TOPRIGHT">
-						<Offset><AbsDimension x="20" y="0" /></Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("Ranged", "Melee")</OnTabPressed>
+				<FontString inherits="GameFontHighlight" justifyH="CENTER" />
+				<Scripts><OnTabPressed>KRT.Spammer:Tab("Ranged", "Healer")</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentRanged" inherits="KRTSpammerEditBox" letters="2" numeric="true">
-				<Size><AbsDimension x="25" y="13" /></Size>
+				<Size><AbsDimension x="30" y="18" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parentMelee" relativePoint="BOTTOMLEFT">
-						<Offset><AbsDimension x="0" y="-15" /></Offset>
+						<Offset><AbsDimension x="0" y="-44" /></Offset>
 					</Anchor>
 				</Anchors>
-				<FontString justifyH="CENTER" />
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("RangedClass", "MeleeClass")</OnTabPressed>
-				</Scripts>
-			</EditBox>
-			<EditBox name="$parentRangedClass" inherits="KRTSpammerEditBox">
-				<Size><AbsDimension x="100" y="13" /></Size>
-				<Anchors>
-					<Anchor point="TOPLEFT" relativeTo="$parentRanged" relativePoint="TOPRIGHT">
-						<Offset><AbsDimension x="20" y="0" /></Offset>
-					</Anchor>
-				</Anchors>
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("MinGS", "Ranged")</OnTabPressed>
+				<FontString inherits="GameFontHighlight" justifyH="CENTER" />
+				<Scripts><OnTabPressed>KRT.Spammer:Tab("MinGS", "Melee")</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentMinGS" inherits="KRTSpammerEditBox" letters="10">
-				<Size><AbsDimension x="100" y="13" /></Size>
+				<Size><AbsDimension x="145" y="13" /></Size>
 				<Anchors>
 					<Anchor point="TOPLEFT" relativeTo="$parentRanged" relativePoint="BOTTOMLEFT">
-						<Offset><AbsDimension x="0" y="-15" /></Offset>
-					</Anchor>
-					<Anchor point="TOPRIGHT" relativeTo="$parentRangedClass" relativePoint="BOTTOMRIGHT">
-						<Offset><AbsDimension x="0" y="-15" /></Offset>
+						<Offset><AbsDimension x="0" y="-47" /></Offset>
 					</Anchor>
 				</Anchors>
-				<Scripts><OnTabPressed>KRT.Spammer:Tab("Message", "RangedClass")</OnTabPressed>
+				<Scripts><OnTabPressed>KRT.Spammer:Tab("Message", "Ranged")</OnTabPressed>
 				</Scripts>
 			</EditBox>
 			<EditBox name="$parentMessage" inherits="KRTSpammerEditBox">

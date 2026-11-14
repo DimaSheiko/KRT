@@ -140,6 +140,8 @@ L.StrSpammerDurationHelp = "It is recommended to use at least 60 seconds to avoi
 L.StrSpammerMessageHelp1 = "This will be added to the end of the generated message."
 L.StrSpammerMessageHelp2 = "You can use |cffffd700{ID}|r to include achievements links."
 L.StrSpammerMessageHelp3 = "You can find the achievement |cffffd700ID|r using the command: \n|cffffd700/krt ach [link]|r."
+L.StrSpammerClassHelp   = "Right-click to rename it (e.g. into your language)."
+L.StrSpammerClassRename = "Custom name for |cffffd700%s|r:\n(leave empty to restore the default)"
 
 -- ==================== Logger Frame ==================== --
 L.StrDate     = "Date"

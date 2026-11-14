@@ -3208,7 +3208,102 @@ do
 	local tickStart, tickPos = 0, 0
 	local pauseStart = 0
 
-	local ceil = math.ceil
+	local ceil, floor = math.ceil, math.floor
+
+	-- Role → class/spec checkboxes. The default label doubles as the saved key;
+	-- KRT_Spammer.ClassNames[key] holds the user's custom (e.g. translated) label.
+	local roles = {"Tank", "Healer", "Melee", "Ranged"}
+	local roleClasses = {
+		Tank   = {"PPala", "PWarrior", "BDK", "Bear"},
+		Healer = {"HPala", "HPriest", "DPriest", "RShaman", "RDruid"},
+		Melee  = {"Rogue", "Fury", "Ret", "EShaman", "DFeral", "DK"},
+		Ranged = {"Mage", "Lock", "Hunter", "SPriest", "Ele", "Boomkin"},
+	}
+	local classButtons = {}
+
+	local function ClassLabel(key)
+		return KRT_Spammer.ClassNames and KRT_Spammer.ClassNames[key] or key
+	end
+
+	-- Checked classes of a role joined as "PPala/BDK":
+	local function ClassList(role)
+		local list = {}
+		for _, key in ipairs(roleClasses[role]) do
+			if KRT_Spammer.Classes and KRT_Spammer.Classes[key] then
+				tinsert(list, ClassLabel(key))
+			end
+		end
+		return tconcat(list, "/")
+	end
+
+	local function RefreshClassButtons()
+		local checked = KRT_Spammer.Classes or {}
+		for _, cb in ipairs(classButtons) do
+			_G[cb:GetName().."Text"]:SetText(ClassLabel(cb.key))
+			cb:SetChecked(checked[cb.key])
+		end
+	end
+
+	StaticPopupDialogs["KRTSPAMMER_CLASS_NAME"] = {
+		text         = L.StrSpammerClassRename,
+		button1      = SAVE,
+		button2      = CANCEL,
+		timeout      = 0,
+		whileDead    = 1,
+		hideOnEscape = 1,
+		hasEditBox   = 1,
+		OnAccept = function(self)
+			local text = _G[self:GetName().."EditBox"]:GetText():trim()
+			KRT_Spammer.ClassNames = KRT_Spammer.ClassNames or {}
+			KRT_Spammer.ClassNames[self.data] = (text ~= "" and text ~= self.data) and text or nil
+			RefreshClassButtons()
+		end,
+		EditBoxOnEnterPressed = function(self)
+			local dialog = self:GetParent()
+			StaticPopupDialogs[dialog.which].OnAccept(dialog)
+			dialog:Hide()
+		end,
+	}
+
+	-- Left-click toggles the class, right-click renames it:
+	local function ClassButton_OnClick(self, button)
+		if button == "RightButton" then
+			self:SetChecked(not self:GetChecked()) -- undo the click's toggle
+			local dialog = StaticPopup_Show("KRTSPAMMER_CLASS_NAME", self.key)
+			if dialog then
+				dialog.data = self.key
+				local box = _G[dialog:GetName().."EditBox"]
+				box:SetText(ClassLabel(self.key))
+				box:HighlightText()
+			end
+			return
+		end
+		KRT_Spammer.Classes = KRT_Spammer.Classes or {}
+		KRT_Spammer.Classes[self.key] = self:GetChecked() and true or nil
+	end
+
+	-- 3 checkboxes per row under each role's count box:
+	local function CreateClassButtons(frame)
+		for _, role in ipairs(roles) do
+			local countBox = _G[frameName..role]
+			for i, key in ipairs(roleClasses[role]) do
+				local cb = CreateFrame("CheckButton", frameName.."ClassCB"..(#classButtons + 1), frame, "UICheckButtonTemplate")
+				cb.key = key
+				cb:SetSize(16, 16)
+				cb:SetHitRectInsets(0, -50, 0, 0)
+				cb:SetPoint("TOPLEFT", countBox, "BOTTOMLEFT", -70 + ((i - 1) % 3) * 75, -1 - floor((i - 1) / 3) * 17)
+				local text = _G[cb:GetName().."Text"]
+				text:SetFontObject(GameFontHighlightSmall)
+				text:ClearAllPoints()
+				text:SetPoint("LEFT", cb, "RIGHT", 4, 0)
+				text:SetText(key)
+				cb:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+				cb:SetScript("OnClick", ClassButton_OnClick)
+				addon:SetTooltip(cb, L.StrSpammerClassHelp, nil, key)
+				tinsert(classButtons, cb)
+			end
+		end
+	end
 
 	-- OnLoad frame:
 	function Spammer:OnLoad(frame)
@@ -3217,6 +3312,7 @@ do
 		frameName = frame:GetName()
 		frame:RegisterForDrag("LeftButton")
 		frame:SetScript("OnUpdate", UpdateUIFrame)
+		CreateClassButtons(frame)
 	end
 
 	-- Toggle frame visibility:
@@ -3325,7 +3421,7 @@ do
 	-- Clears Data
 	function Spammer:Clear()
 		for k, _ in pairs(KRT_Spammer) do
-			if k ~= "Channels" and k ~= "Duration" and k ~= "showSlots" and k ~= "gsAchNeeded" then
+			if k ~= "Channels" and k ~= "Duration" and k ~= "showSlots" and k ~= "gsAchNeeded" and k ~= "ClassNames" then
 				KRT_Spammer[k] = nil
 			end
 		end
@@ -3333,13 +3429,10 @@ do
 		Spammer:Stop()
 		_G[frameName.."Name"]:SetText("")
 		_G[frameName.."Tank"]:SetText("")
-		_G[frameName.."TankClass"]:SetText("")
 		_G[frameName.."Healer"]:SetText("")
-		_G[frameName.."HealerClass"]:SetText("")
 		_G[frameName.."Melee"]:SetText("")
-		_G[frameName.."MeleeClass"]:SetText("")
 		_G[frameName.."Ranged"]:SetText("")
-		_G[frameName.."RangedClass"]:SetText("")
+		RefreshClassButtons()
 		_G[frameName.."Message"]:SetText("")
 		_G[frameName.."MinGS"]:SetText("")
 		_G[frameName.."Output"]:SetText("LFM")
@@ -3418,7 +3511,7 @@ do
 			local outBottom = outputStr:GetBottom()
 			local frmBottom = UISpammer:GetBottom()
 			local frmHeight = UISpammer:GetHeight()
-			local baseHeight = 452
+			local baseHeight = 588
 
 			if outBottom and frmBottom then
 				if outBottom < frmBottom - 1 then
@@ -3463,6 +3556,7 @@ do
 						_G[frameName..k]:SetText(v)
 					end
 				end
+				RefreshClassButtons()
 				loaded = true
 			end
 
@@ -3471,13 +3565,13 @@ do
 				channels = KRT_Spammer.Channels or {}
 				name        = _G[frameName.."Name"]:GetText():trim()
 				tank        = tonumber(_G[frameName.."Tank"]:GetText()) or 0
-				tankClass   = _G[frameName.."TankClass"]:GetText():trim()
+				tankClass   = ClassList("Tank")
 				healer      = tonumber(_G[frameName.."Healer"]:GetText()) or 0
-				healerClass = _G[frameName.."HealerClass"]:GetText():trim()
+				healerClass = ClassList("Healer")
 				melee       = tonumber(_G[frameName.."Melee"]:GetText()) or 0
-				meleeClass  = _G[frameName.."MeleeClass"]:GetText():trim()
+				meleeClass  = ClassList("Melee")
 				ranged      = tonumber(_G[frameName.."Ranged"]:GetText()) or 0
-				rangedClass = _G[frameName.."RangedClass"]:GetText():trim()
+				rangedClass = ClassList("Ranged")
 				message     = _G[frameName.."Message"]:GetText():trim()
 
 				local temp = output
